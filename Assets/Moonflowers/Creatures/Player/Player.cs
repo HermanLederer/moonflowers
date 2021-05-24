@@ -42,7 +42,7 @@ namespace Moonflowers.Creatures
 				RaycastHit navHit;
 				if (Physics.Raycast(navRay, out navHit))
 				{
-					Debug.Log(m_NavAgent.SetDestination(navHit.point));
+					m_NavAgent.SetDestination(navHit.point);
 				}
 			}
 		}
