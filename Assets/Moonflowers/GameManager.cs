@@ -15,6 +15,7 @@ namespace Moonflowers
 		//
 		// Editor
 		[SerializeField] CinemachineTargetGroup cmTartgets;
+		[SerializeField] Creatures.Player player;
 
 		//
 		//
@@ -77,6 +78,11 @@ namespace Moonflowers
 					if (cmTartgets.m_Targets[1].weight < 0) cmTartgets.m_Targets[1].weight = 0;
 					yield return null;
 				}
+		}
+
+		public void NavigatePlayer(Vector3 destination, float freezeTime)
+		{
+			player.Navigate(destination, freezeTime);
 		}
 	}
 }

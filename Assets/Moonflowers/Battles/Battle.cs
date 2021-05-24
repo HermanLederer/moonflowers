@@ -15,6 +15,7 @@ namespace Moonflowers.Battles
 		//
 		// Editor
 		[SerializeField] int[] m_Waves;
+		[SerializeField] Transform m_StartPosition;
 		[SerializeField] Transform m_SpawnPositions;
 		[SerializeField] GameObject m_EnemyPrefab;
 		[SerializeField] Transform m_CameraTarget;
@@ -34,31 +35,39 @@ namespace Moonflowers.Battles
 		//
 		// Methods
 		public void Engage() {
-			if (NextWave())
+			if (NextWave(1f))
 			{
-				if (m_CameraTarget != null)
-					GameManager.instance.SetCameraTarget(m_CameraTarget, m_CameraTargetRadius);
+				GameManager.instance.NavigatePlayer(m_StartPosition.position, 1f);
+				GameManager.instance.SetCameraTarget(m_CameraTarget, m_CameraTargetRadius);
 			}
 		}
 
-		private bool NextWave()
+		private bool NextWave(float delay = 0f)
 		{
 			if (nextWave < m_Waves.Length)
 			{
-				for (int i = 0; i <= m_Waves[nextWave]; ++i)
-				{
-					var pos = m_SpawnPositions.GetChild(Mathf.FloorToInt(Random.Range(0, m_SpawnPositions.childCount - 1)));
-					++hostilesAlive;
-					Creature c = Instantiate(m_EnemyPrefab, pos.position, pos.rotation, transform).GetComponent<Creature>();
-					c.onDeath.AddListener(hostileDead);
-				}
-
-				++nextWave;
+				StartCoroutine(NextWaveCorutine(delay, 0.1f));
 
 				return true;
 			}
 
 			return false;
+		}
+
+		private IEnumerator NextWaveCorutine(float delay, float gap)
+		{
+			yield return new WaitForSeconds(delay);
+
+			for (int i = 0; i < m_Waves[nextWave]; ++i)
+			{
+				var pos = m_SpawnPositions.GetChild(Mathf.FloorToInt(Random.Range(0, m_SpawnPositions.childCount - 1)));
+				++hostilesAlive;
+				Creature c = Instantiate(m_EnemyPrefab, pos.position, pos.rotation, transform).GetComponent<Creature>();
+				c.onDeath.AddListener(HostileDead);
+				yield return new WaitForSeconds(gap);
+			}
+
+			++nextWave;
 		}
 		
 		public void EndBattle()
@@ -66,7 +75,7 @@ namespace Moonflowers.Battles
 			GameManager.instance.RemoveCameraTarget();
 		}
 
-		private void hostileDead()
+		private void HostileDead()
 		{
 			--hostilesAlive;
 			if (hostilesAlive == 0)

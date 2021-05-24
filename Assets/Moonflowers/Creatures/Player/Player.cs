@@ -28,6 +28,7 @@ namespace Moonflowers.Creatures
 		private Camera m_Cam;
 
 		private bool m_IsNavigating = false;
+		private bool m_IsLocked = false;
 		private Vector2 m_MousePos;
 
 		//
@@ -42,7 +43,7 @@ namespace Moonflowers.Creatures
 
 		private void Update()
 		{
-			if (m_IsNavigating)
+			if (!m_IsLocked && m_IsNavigating)
 			{
 				RaycastHit navHit;
 				if (NavigationRaycast(out navHit))
@@ -52,36 +53,31 @@ namespace Moonflowers.Creatures
 			}
 		}
 
-		private void OnInteract(InputValue value)
+		private void OnInteract()
 		{
-			// Mouse down
-			if (value.Get<float>() > 0f)
+			RaycastHit navHit;
+			if (InteactionRaycast(out navHit))
 			{
-				RaycastHit navHit;
-				if (InteactionRaycast(out navHit))
+				var parent = navHit.transform.parent.gameObject;
+				Hostile hostile;
+				if (parent.TryGetComponent(out hostile))
 				{
-					var parent = navHit.transform.parent.gameObject;
-					Hostile hostile;
-					if (parent.TryGetComponent(out hostile))
-					{
-						//
-						// Attack
-						hostile.TakeDamage(attackDamage);
-					}
-					else if (parent.TryGetComponent<Player>(out _))
-					{
-						//
-						// Area attack / jump
-						Jump();
-					}
+					//
+					// Attack
+					hostile.TakeDamage(attackDamage);
 				}
-				else m_IsNavigating = true;
+				else if (parent.TryGetComponent<Player>(out _))
+				{
+					//
+					// Area attack / jump
+					Jump();
+				}
 			}
-			// Mosue up
-			else
-			{
-				m_IsNavigating = false;
-			}
+		}
+
+		private void OnNavigate(InputValue value)
+		{
+			m_IsNavigating = value.Get<float>() > 0f;
 		}
 
 		private void OnHover(InputValue value)
@@ -99,6 +95,29 @@ namespace Moonflowers.Creatures
 		{
 			Ray navRay = m_Cam.ScreenPointToRay(m_MousePos);
 			return Physics.Raycast(navRay, out navHit, 128f, interactionLayers);
+		}
+
+		public void Navigate(Vector3 destination, float freezeTime)
+		{
+			StartCoroutine(NavigateCorutine(destination, freezeTime));
+		}
+
+		private IEnumerator NavigateCorutine(Vector3 destination, float freezeTime)
+		{
+			Lock();
+			m_NavAgent.SetDestination(destination);
+			yield return new WaitForSeconds(freezeTime);
+			Unock();
+		}
+
+		private void Lock()
+		{
+			m_IsLocked = true;
+		}
+
+		private void Unock()
+		{
+			m_IsLocked = false;
 		}
 
 		private void Jump()

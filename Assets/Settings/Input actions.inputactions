@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Interact",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "d8d266f8-3ee9-4d16-bce6-2c356420946d",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -18,6 +18,14 @@
                     "type": "Value",
                     "id": "eecf88b4-bd93-4e9d-a8d6-6a2081b45854",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Navigate",
+                    "type": "Value",
+                    "id": "48bbe91d-faf9-4ee0-8a3b-f77a7f8b55da",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -42,6 +50,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Hover",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "806e5f39-6389-4935-a99e-b6692a799f75",
+                    "path": "*/{SecondaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
