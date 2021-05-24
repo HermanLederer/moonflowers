@@ -19,7 +19,9 @@ namespace Moonflowers.Creatures
 		// Properties
 		public float health = 100f;
 		public float maxHealth = 100f;
+		public float attackDamage = 25f;
 
+		public bool destroyOnDeath = true;
 		public UnityEvent onDeath;
 
 		//
@@ -48,8 +50,13 @@ namespace Moonflowers.Creatures
 		public void Kill()
 		{
 			onDeath.Invoke();
+			
+			if (destroyOnDeath) Destroy(gameObject);
+		}
+
+		private void OnDestroy()
+		{
 			onDeath.RemoveAllListeners();
-			Destroy(gameObject);
 		}
 	}
 }

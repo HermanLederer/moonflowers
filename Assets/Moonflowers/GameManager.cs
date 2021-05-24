@@ -20,6 +20,10 @@ namespace Moonflowers
 		//
 		//
 		// Properties
+		public Creatures.Player Player
+		{
+			get { return player; }
+		}
 
 		//
 		//
@@ -45,6 +49,11 @@ namespace Moonflowers
 			instance = this;
 		}
 
+		public void Start()
+		{
+			player.onDeath.AddListener(Respawn);
+		}
+
 		public void SetCameraTarget(Transform pos, float radius)
 		{
 			var target = new CinemachineTargetGroup.Target();
@@ -62,19 +71,20 @@ namespace Moonflowers
 		private IEnumerator FadeCameraTarget(bool fadeIn = true)
 		{
 			const float weight = 3f;
-			const float speed = 3f;
+			const float speedIn = 2f;
+			const float speedOut = 1f;
 
 			if (fadeIn)
 				while (cmTartgets.m_Targets[1].weight < weight)
 				{
-					cmTartgets.m_Targets[1].weight += Time.deltaTime * speed;
+					cmTartgets.m_Targets[1].weight += Time.deltaTime * speedIn;
 					if (cmTartgets.m_Targets[1].weight > 3) cmTartgets.m_Targets[1].weight = weight;
 					yield return null;
 				}
 			else
 				while (cmTartgets.m_Targets[1].weight > 0)
 				{
-					cmTartgets.m_Targets[1].weight -= Time.deltaTime * speed;
+					cmTartgets.m_Targets[1].weight -= Time.deltaTime * speedOut;
 					if (cmTartgets.m_Targets[1].weight < 0) cmTartgets.m_Targets[1].weight = 0;
 					yield return null;
 				}
@@ -83,6 +93,11 @@ namespace Moonflowers
 		public void NavigatePlayer(Vector3 destination, float freezeTime)
 		{
 			player.Navigate(destination, freezeTime);
+		}
+
+		private void Respawn()
+		{
+			Debug.Log("You lost");
 		}
 	}
 }

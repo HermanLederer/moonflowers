@@ -13,14 +13,13 @@ namespace Moonflowers.Creatures
 
 		//
 		//
-		// editor
+		// Editor
 		[SerializeField] LayerMask navigationLayers;
 		[SerializeField] LayerMask interactionLayers;
 
 		//
 		//
 		// Properties
-		public float attackDamage = 25f;
 
 		//
 		//

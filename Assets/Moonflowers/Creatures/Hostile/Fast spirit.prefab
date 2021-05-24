@@ -135,15 +135,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -769099112314977033, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: m_Speed
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -769099112314977033, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: m_Acceleration
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199331204340754377, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: attackGap
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5199331204340754377, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: attackDamage
-      value: 12
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6403832476775328458, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403832476775328458, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403832476775328458, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403832476775328458, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6403832476775328458, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -187,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6782327440549842987, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: m_Name
-      value: Dark spirit
+      value: Fast spirit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
