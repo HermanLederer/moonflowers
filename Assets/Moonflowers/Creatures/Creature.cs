@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.AI;
 
 namespace Moonflowers.Creatures
@@ -16,6 +17,10 @@ namespace Moonflowers.Creatures
 		//
 		//
 		// Properties
+		public float health = 100f;
+		public float maxHealth = 100f;
+
+		public UnityEvent onDeath;
 
 		//
 		//
@@ -27,6 +32,25 @@ namespace Moonflowers.Creatures
 		protected virtual void Awake()
 		{
 			m_NavAgent = GetComponent<NavMeshAgent>();
+			onDeath = new UnityEvent();
+		}
+
+		public void TakeDamage(float damage)
+		{
+			health -= damage;
+			if (health <= 0)
+			{
+				health = 0;
+				Kill();
+			}
+		}
+
+		public void Kill()
+		{
+			onDeath.Invoke();
+			onDeath.RemoveAllListeners();
+			Destroy(gameObject);
 		}
 	}
 }
+
