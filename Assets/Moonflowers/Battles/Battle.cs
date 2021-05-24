@@ -14,7 +14,8 @@ namespace Moonflowers.Battles
 		//
 		//
 		// Editor
-		[SerializeField] List<Transform> m_SpawnPositions;
+		[SerializeField] int[] m_Waves;
+		[SerializeField] Transform m_SpawnPositions;
 		[SerializeField] GameObject m_EnemyPrefab;
 		[SerializeField] Transform m_CameraTarget;
 		[SerializeField] float m_CameraTargetRadius;
@@ -26,22 +27,40 @@ namespace Moonflowers.Battles
 		//
 		//
 		// Privates
+		private int nextWave = 0;
 		private int hostilesAlive = 0;
 
 		//
 		//
 		// Methods
 		public void Engage() {
-			if (m_CameraTarget != null)
-				GameManager.instance.SetCameraTarget(m_CameraTarget, m_CameraTargetRadius);
-
-			m_SpawnPositions.ForEach((Transform pos) => {
-				++hostilesAlive;
-				Creature c = Instantiate(m_EnemyPrefab, pos.position, pos.rotation).GetComponent<Creature>();
-				c.onDeath.AddListener(hostileDead);
-			});
+			if (NextWave())
+			{
+				if (m_CameraTarget != null)
+					GameManager.instance.SetCameraTarget(m_CameraTarget, m_CameraTargetRadius);
+			}
 		}
 
+		private bool NextWave()
+		{
+			if (nextWave < m_Waves.Length)
+			{
+				for (int i = 0; i <= m_Waves[nextWave]; ++i)
+				{
+					var pos = m_SpawnPositions.GetChild(Mathf.FloorToInt(Random.Range(0, m_SpawnPositions.childCount - 1)));
+					++hostilesAlive;
+					Creature c = Instantiate(m_EnemyPrefab, pos.position, pos.rotation, transform).GetComponent<Creature>();
+					c.onDeath.AddListener(hostileDead);
+				}
+
+				++nextWave;
+
+				return true;
+			}
+
+			return false;
+		}
+		
 		public void EndBattle()
 		{
 			GameManager.instance.RemoveCameraTarget();
@@ -50,7 +69,10 @@ namespace Moonflowers.Battles
 		private void hostileDead()
 		{
 			--hostilesAlive;
-			if (hostilesAlive == 0) EndBattle();
+			if (hostilesAlive == 0)
+			{
+				if (!NextWave()) EndBattle();
+			}
 		}
 	}
 }
