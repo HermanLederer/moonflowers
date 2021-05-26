@@ -142,8 +142,16 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5199331204340754377, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199331204340754377, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: attackGap
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199331204340754377, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
+      propertyPath: maxHealth
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5199331204340754377, guid: 6db07789b6ad2e445a94553ea482dbe8, type: 3}
       propertyPath: attackDamage
