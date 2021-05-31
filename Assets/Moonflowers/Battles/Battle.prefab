@@ -110,9 +110,9 @@ MonoBehaviour:
   m_Waves: 
   m_StartPosition: {fileID: 3668844848282066558}
   m_SpawnPositions: {fileID: 9055632143829426774}
-  m_DarkSpiritPrefab: {fileID: 3211187344693229962, guid: 7a88629b5e4aec74eb6ef321369d39e8, type: 3}
-  m_FastSpiritPrefab: {fileID: 3211187344693229962, guid: c76fee1cabfbb8b4c8eb63f8163566c1, type: 3}
-  m_FatSpiritPrefab: {fileID: 3211187344693229962, guid: 77479457e893fec45ab17080d95df3f3, type: 3}
+  m_DarkSpiritPrefab: {fileID: 8009486843513685830, guid: 89b70969d99080b448ebd26a4e58010a, type: 3}
+  m_FastSpiritPrefab: {fileID: 8009486843513685830, guid: 89b70969d99080b448ebd26a4e58010a, type: 3}
+  m_FatSpiritPrefab: {fileID: 8009486843513685830, guid: 89b70969d99080b448ebd26a4e58010a, type: 3}
   m_CameraTarget: {fileID: 2592383404219256600}
   m_CameraTargetRadius: 10
 --- !u!1 &7330748114971726337

@@ -35,6 +35,7 @@ namespace Moonflowers.Battles
 		private void OnTriggerEnter(Collider other)
 		{
 			gameObject.GetComponentInParent<Battle>().Engage();
+			Destroy(gameObject);
 		}
 	}
 }

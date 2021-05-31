@@ -31,7 +31,7 @@ namespace Moonflowers
 
 		//
 		//
-		// Singleton
+		// *Singleton*
 		public static GameManager instance;
 
 		//
@@ -47,6 +47,7 @@ namespace Moonflowers
 			}
 
 			instance = this;
+			DontDestroyOnLoad(gameObject);
 		}
 
 		public void Start()

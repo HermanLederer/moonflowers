@@ -16,6 +16,14 @@ namespace Moonflowers.Creatures
 
 		//
 		//
+		// Editor
+
+		//
+		//
+		// Getters
+
+		//
+		//
 		// Properties
 		public float health = 100f;
 		public float maxHealth = 100f;

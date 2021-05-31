@@ -8,6 +8,11 @@ namespace Moonflowers.Creatures
 	{
 		//
 		//
+		// Editor
+		[SerializeField] GameObject magickPickupPrefab;
+
+		//
+		//
 		// Properties
 		public float attackRadius = 1f;
 		public float attackGap = 1f;

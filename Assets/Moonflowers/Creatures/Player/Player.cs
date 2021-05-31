@@ -14,12 +14,17 @@ namespace Moonflowers.Creatures
 		//
 		//
 		// Editor
+		[SerializeField] GameObject projectilePrefab;
 		[SerializeField] LayerMask navigationLayers;
 		[SerializeField] LayerMask interactionLayers;
 
 		//
 		//
 		// Properties
+		public float magick = 0f;
+		public float maxMagick = 100f;
+		public float magickRegeneration = 120f;
+		public float magickCost = 48f;
 
 		//
 		//
@@ -42,6 +47,9 @@ namespace Moonflowers.Creatures
 
 		private void Update()
 		{
+			magick += magickRegeneration * Time.deltaTime;
+			if (magick > maxMagick) magick = maxMagick;
+
 			if (!m_IsLocked && m_IsNavigating)
 			{
 				RaycastHit navHit;
@@ -57,19 +65,33 @@ namespace Moonflowers.Creatures
 			RaycastHit navHit;
 			if (InteactionRaycast(out navHit))
 			{
-				var parent = navHit.transform.parent.gameObject;
 				Hostile hostile;
-				if (parent.TryGetComponent(out hostile))
-				{
-					//
-					// Attack
-					hostile.TakeDamage(attackDamage);
-				}
-				else if (parent.TryGetComponent<Player>(out _))
+				//if (parent.TryGetComponent(out hostile))
+				//{
+				//	//
+				//	// Hostile clicked
+				//}
+				if (navHit.transform.parent && navHit.transform.parent.TryGetComponent<Player>(out _))
 				{
 					//
 					// Area attack / jump
 					Jump();
+				}
+				else
+				{
+					//
+					// Attack
+					if (magick > magickCost)
+					{
+						var target = navHit.point;
+						var origin = transform.position + Vector3.up * 1.2f;
+						var direction = (target - origin).normalized;
+
+						var pO = Instantiate(projectilePrefab, origin + direction, Quaternion.identity);
+						// var p = pO.GetComponent<Combat.Projectile>();
+						pO.transform.LookAt(navHit.point);
+						magick -= magickCost;
+					}
 				}
 			}
 		}
@@ -93,7 +115,7 @@ namespace Moonflowers.Creatures
 		private bool InteactionRaycast(out RaycastHit navHit)
 		{
 			Ray navRay = m_Cam.ScreenPointToRay(m_MousePos);
-			return Physics.Raycast(navRay, out navHit, 128f, interactionLayers);
+			return Physics.Raycast(navRay, out navHit, 128f);
 		}
 
 		public void Navigate(Vector3 destination, float freezeTime)
