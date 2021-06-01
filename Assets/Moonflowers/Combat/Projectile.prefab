@@ -125,7 +125,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0, g: 0.83333325, b: 1, a: 1}
-  m_Intensity: 28647.889
+  m_Intensity: 47746.48
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 360000
+  m_Intensity: 600000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Light: {fileID: 8854860142865854632}
   m_Model: {fileID: 5080267485682278656}
   speed: 12
-  damage: 24
+  damage: 26
 --- !u!135 &8455116061807821446
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -490,6 +490,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4999595449661197652, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999595449661197652, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}
+      propertyPath: VelocityModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999595449661197652, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999595449661197652, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999595449661197652, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999595449661197652, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5818342289749170974, guid: 213da328a0665cc4a89dcbaea718fec3, type: 3}

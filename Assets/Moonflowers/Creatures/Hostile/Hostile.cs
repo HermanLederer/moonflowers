@@ -9,7 +9,7 @@ namespace Moonflowers.Creatures
 		//
 		//
 		// Editor
-		[SerializeField] GameObject magickPickupPrefab;
+		[SerializeField] ParticleSystem hitParticles;
 
 		//
 		//
@@ -30,9 +30,16 @@ namespace Moonflowers.Creatures
 
 		private void AttackPlayer()
 		{
-			if (Vector3.Distance(transform.position, GameManager.instance.Player.transform.position) <= attackRadius) {
+			if (Vector3.Distance(transform.position, GameManager.instance.Player.transform.position) <= attackRadius)
+			{
 				GameManager.instance.Player.TakeDamage(attackDamage);
 				nextAttackTime = Time.time + attackGap;
+				hitParticles.Play();
+				hitParticles.transform.position = Vector3.Lerp(
+					transform.position,
+					GameManager.instance.Player.transform.position,
+					0.9f
+				) + Vector3.up;
 			}
 		}
 	}

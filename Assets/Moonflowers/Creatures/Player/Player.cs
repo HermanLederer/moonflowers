@@ -17,6 +17,7 @@ namespace Moonflowers.Creatures
 		[SerializeField] GameObject projectilePrefab;
 		[SerializeField] LayerMask navigationLayers;
 		[SerializeField] LayerMask interactionLayers;
+		[SerializeField] GameObject aim;
 
 		//
 		//
@@ -50,11 +51,15 @@ namespace Moonflowers.Creatures
 			magick += magickRegeneration * Time.deltaTime;
 			if (magick > maxMagick) magick = maxMagick;
 
+			aim.SetActive(false);
+
 			if (!m_IsLocked && m_IsNavigating)
 			{
 				RaycastHit navHit;
 				if (NavigationRaycast(out navHit))
 				{
+					aim.transform.position = navHit.point + Vector3.up * 0.01f;
+					aim.SetActive(true);
 					m_NavAgent.SetDestination(navHit.point);
 				}
 			}

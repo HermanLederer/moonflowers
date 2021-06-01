@@ -114,7 +114,7 @@ MonoBehaviour:
   m_FastSpiritPrefab: {fileID: 8009486843513685830, guid: 89b70969d99080b448ebd26a4e58010a, type: 3}
   m_FatSpiritPrefab: {fileID: 8009486843513685830, guid: 89b70969d99080b448ebd26a4e58010a, type: 3}
   m_CameraTarget: {fileID: 2592383404219256600}
-  m_CameraTargetRadius: 10
+  m_CameraTargetRadius: 8
 --- !u!1 &7330748114971726337
 GameObject:
   m_ObjectHideFlags: 0

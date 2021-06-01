@@ -55,7 +55,7 @@ namespace Moonflowers.Combat
 			Creatures.Creature creature;
 			if (other.transform.parent && other.transform.parent.TryGetComponent(out creature))
 			{
-				creature.TakeDamage(damage);
+				if (!(creature is Creatures.Player)) creature.TakeDamage(damage);
 			}
 
 			StartCoroutine(DestroyCorutine());
