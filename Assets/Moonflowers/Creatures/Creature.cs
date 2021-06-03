@@ -35,6 +35,7 @@ namespace Moonflowers.Creatures
 		//
 		//
 		// Privates
+		protected bool m_IsDead = false;
 
 		//
 		//
@@ -47,6 +48,8 @@ namespace Moonflowers.Creatures
 
 		public void TakeDamage(float damage)
 		{
+			if (m_IsDead) return;
+
 			health -= damage;
 			if (health <= 0)
 			{
@@ -57,8 +60,8 @@ namespace Moonflowers.Creatures
 
 		public void Kill()
 		{
+			m_IsDead = true;
 			onDeath.Invoke();
-			
 			if (destroyOnDeath) Destroy(gameObject);
 		}
 

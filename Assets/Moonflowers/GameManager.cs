@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 namespace Moonflowers
 {
@@ -16,14 +17,13 @@ namespace Moonflowers
 		// Editor
 		[SerializeField] CinemachineTargetGroup cmTartgets;
 		[SerializeField] Creatures.Player player;
+		[SerializeField] UI.UI ui;
 
 		//
 		//
-		// Properties
-		public Creatures.Player Player
-		{
-			get { return player; }
-		}
+		// Getters
+		public Creatures.Player Player { get => player; }
+		public UI.UI UI { get => ui; }
 
 		//
 		//
@@ -42,17 +42,16 @@ namespace Moonflowers
 			if (instance != null)
 			{
 				Destroy(gameObject);
-				Debug.LogError("Cannot have more than one instance of " + name);
+				Debug.LogError("Cannot have more than one instance of " + ToString());
 				return;
 			}
 
 			instance = this;
-			DontDestroyOnLoad(gameObject);
 		}
 
 		public void Start()
 		{
-			player.onDeath.AddListener(Respawn);
+			player.onDeath.AddListener(Loose);
 		}
 
 		public void SetCameraTarget(Transform pos, float radius)
@@ -96,9 +95,24 @@ namespace Moonflowers
 			player.Navigate(destination, freezeTime);
 		}
 
-		private void Respawn()
+		public void Loose()
 		{
-			Debug.Log("You lost");
+			ui.DeathScreen();
+		}
+
+		public void Win()
+		{
+			ui.VictoryScreen();
+		}
+
+		public void Restart()
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
+		public void Exit()
+		{
+			Application.Quit();
 		}
 	}
 }

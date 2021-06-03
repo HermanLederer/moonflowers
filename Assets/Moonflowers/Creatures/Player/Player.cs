@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +17,7 @@ namespace Moonflowers.Creatures
 		[SerializeField] LayerMask navigationLayers;
 		[SerializeField] LayerMask interactionLayers;
 		[SerializeField] GameObject aim;
+		[SerializeField] ParticleSystem healParticles;
 
 		//
 		//
@@ -26,6 +26,8 @@ namespace Moonflowers.Creatures
 		public float maxMagick = 100f;
 		public float magickRegeneration = 120f;
 		public float magickCost = 48f;
+		public float healingPower = 24f;
+		public float healCost = 20f;
 
 		//
 		//
@@ -44,6 +46,11 @@ namespace Moonflowers.Creatures
 			base.Awake();
 
 			m_Cam = Camera.main;
+
+			onDeath.AddListener(() =>
+			{
+				m_NavAgent.SetDestination(transform.position);
+			});
 		}
 
 		private void Update()
@@ -52,6 +59,8 @@ namespace Moonflowers.Creatures
 			if (magick > maxMagick) magick = maxMagick;
 
 			aim.SetActive(false);
+
+			if (m_IsDead) return;
 
 			if (!m_IsLocked && m_IsNavigating)
 			{
@@ -67,10 +76,12 @@ namespace Moonflowers.Creatures
 
 		private void OnInteract()
 		{
+			if (m_IsDead) return;
+
 			RaycastHit navHit;
 			if (InteactionRaycast(out navHit))
 			{
-				Hostile hostile;
+				//Hostile hostile;
 				//if (parent.TryGetComponent(out hostile))
 				//{
 				//	//
@@ -79,14 +90,18 @@ namespace Moonflowers.Creatures
 				if (navHit.transform.parent && navHit.transform.parent.TryGetComponent<Player>(out _))
 				{
 					//
-					// Area attack / jump
-					Jump();
+					// Self click
+					if (magick >= healCost)
+					{
+						Heal();
+						magick -= healCost;
+					}
 				}
 				else
 				{
 					//
 					// Attack
-					if (magick > magickCost)
+					if (magick >= magickCost)
 					{
 						var target = navHit.point;
 						var origin = transform.position + Vector3.up * 1.2f;
@@ -146,9 +161,10 @@ namespace Moonflowers.Creatures
 			m_IsLocked = false;
 		}
 
-		private void Jump()
+		private void Heal()
 		{
-			Debug.Log("Jump");
+			health += healingPower;
+			healParticles.Play();
 		}
 	}
 }
